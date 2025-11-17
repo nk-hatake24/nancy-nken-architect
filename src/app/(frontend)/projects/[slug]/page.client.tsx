@@ -5,7 +5,6 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link' // Correction
 import Image from 'next/image' // Correction
-import type { Metadata } from 'next'
 import { ArrowLeft, Calendar, MapPin, User, Square } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Project } from '@/payload-types'

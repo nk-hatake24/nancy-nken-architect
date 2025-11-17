@@ -84,8 +84,8 @@ export const ArchitectHero: React.FC<Page['hero']> = (props) => {
                   asChild
                   className={
                     !isPrimary
-                      ? 'bg-transparent border-ivoire-brume text-ivoire-brume hover:bg-ivoire-brume/10'
-                      : ''
+                      ? 'bg-transparent border-ivoire-brume text-ivoire-brume hover:bg-violet-studio hover:border-none '
+                      : 'hover:bg-transparent hover:border hover:border-ivoire-brume hover:text-ivoire-brume group-hover:gap-4 transition-all duration-300'
                   }
                 >
                   <Link href={link.url || '#'} className="gap-2">

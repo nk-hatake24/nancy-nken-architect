@@ -38,7 +38,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
             />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-noir-urbain/90 via-noir-urbain/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-noir-urbain/90 via-noir-urbain/60 to-transparent" />
 
           <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
             <div>

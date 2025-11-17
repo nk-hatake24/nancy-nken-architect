@@ -1,10 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { Header as HeaderType } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
-import { SearchIcon } from 'lucide-react'
+
 import { motion } from 'framer-motion'
 
 export const HeaderNav: React.FC<{
