@@ -12,15 +12,24 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { Montserrat_Alternates } from 'next/font/google'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { LayoutInitializer } from '@/components/LayoutIntializer'
+
+const montserrat = Montserrat_Alternates({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap', // meilleure performance
+  weight: ['400', '500', '600', '700'], // choisis ce dont tu as besoin
+})
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(montserrat.variable)} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
@@ -28,15 +37,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
+          <LayoutInitializer>
+            <AdminBar
+              adminBarProps={{
+                preview: isEnabled,
+              }}
+            />
 
-          <Header />
-          {children}
-          <Footer />
+            <Header />
+            {children}
+            <Footer />
+          </LayoutInitializer>
         </Providers>
       </body>
     </html>

@@ -16,11 +16,11 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 
-
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 // import { cloudinaryStorage } from 'payload-cloudinary';
 
 import { s3Storage } from '@payloadcms/storage-s3'
+import { Projects } from './collections/Project'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,15 +28,15 @@ const dirname = path.dirname(filename)
 const FRONTEND_URL = process.env.PAYLOAD_PUBLIC_FRONTEND_URL
 
 const emailAdapter = nodemailerAdapter({
-  defaultFromAddress: process.env.DEFAULT_ADDRESS || '',
-  defaultFromName: 'creative-family',
+  defaultFromAddress: process.env.DEFAULT_ADDRESS || 'nkenlamichel@gmail.com',
+  defaultFromName: 'nancynken',
   // Nodemailer transportOptions
   transportOptions: {
-    host: process.env.SMTP_HOST || '',
-    port: process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587,
+    host: 'smtp.gmail.com',
+    port: 587,
     auth: {
-      user: process.env.SMTP_USER || '',
-      pass: process.env.SMTP_PASS || '',
+      user: 'nkenlamichel@gmail.com',
+      pass: 'lkhr slqs ensr pixo',
     },
   },
 })
@@ -94,7 +94,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users, Projects],
   cors: [
     FRONTEND_URL,
     'http://localhost:3000', // Garde localhost pour le dev

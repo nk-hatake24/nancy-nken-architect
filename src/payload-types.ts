@@ -72,6 +72,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    projects: Project;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +95,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -157,7 +159,7 @@ export interface Page {
   id: string;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'architectHero' | 'aboutHero';
     richText?: {
       root: {
         type: string;
@@ -173,6 +175,8 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    title?: string | null;
+    tagline?: string | null;
     links?:
       | {
           link: {
@@ -192,14 +196,43 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?: ('primary' | 'outline' | 'secondary' | 'link' | 'ghost' | 'destructive' | 'default') | null;
           };
           id?: string | null;
         }[]
       | null;
     media?: (string | null) | Media;
+    backgroundImage?: (string | null) | Media;
+    mainTitle?: string | null;
+    subtitle?: string | null;
+    portraitImage?: (string | null) | Media;
+    contentTitle?: string | null;
+    contentBody?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cvFile?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | ProjectsGridBlock
+    | ValuesBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -780,6 +813,94 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectsGridBlock".
+ */
+export interface ProjectsGridBlock {
+  title?: string | null;
+  description?: string | null;
+  projects: (string | Project)[];
+  callToAction: {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: string | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: string | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('primary' | 'outline' | 'secondary' | 'link' | 'ghost' | 'destructive' | 'default') | null;
+    };
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectsGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  year: string;
+  location: string;
+  type: string;
+  description: string;
+  mainImage: string | Media;
+  features?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  details?: {
+    client?: string | null;
+    surface?: string | null;
+    duration?: string | null;
+    status?: string | null;
+  };
+  gallery?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock".
+ */
+export interface ValuesBlock {
+  backgroundColor?: ('default' | 'stone') | null;
+  title: string;
+  description?: string | null;
+  values: {
+    valueTitle: string;
+    valueDescription: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'values';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -989,6 +1110,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -1061,6 +1186,8 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        title?: T;
+        tagline?: T;
         links?:
           | T
           | {
@@ -1077,6 +1204,13 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        backgroundImage?: T;
+        mainTitle?: T;
+        subtitle?: T;
+        portraitImage?: T;
+        contentTitle?: T;
+        contentBody?: T;
+        cvFile?: T;
       };
   layout?:
     | T
@@ -1086,6 +1220,8 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        projectsGrid?: T | ProjectsGridBlockSelect<T>;
+        values?: T | ValuesBlockSelect<T>;
       };
   meta?:
     | T
@@ -1182,6 +1318,49 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectsGridBlock_select".
+ */
+export interface ProjectsGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  projects?: T;
+  callToAction?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock_select".
+ */
+export interface ValuesBlockSelect<T extends boolean = true> {
+  backgroundColor?: T;
+  title?: T;
+  description?: T;
+  values?:
+    | T
+    | {
+        valueTitle?: T;
+        valueDescription?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1352,6 +1531,42 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  year?: T;
+  location?: T;
+  type?: T;
+  description?: T;
+  mainImage?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  details?:
+    | T
+    | {
+        client?: T;
+        surface?: T;
+        duration?: T;
+        status?: T;
+      };
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

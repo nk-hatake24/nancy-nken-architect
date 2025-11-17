@@ -1,86 +1,48 @@
+ @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap'); 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: unset;
-    font-weight: unset;
-  }
-
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Brand Colors - Nancy Nkenla Identity */
+    --ivoire-brume: 45 33% 96%;
+    --gris-pierre: 60 5% 81%;
+    --noir-urbain: 0 0% 10%;
+    --bleu-boreale: 201 68% 52%;
+    --violet-studio: 258 90% 66%;
+    --vert-sauge: 119 17% 72%;
 
-    --card: 240 5% 96%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 240 6% 80%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.2rem;
-
-    --success: 196 52% 74%;
-    --warning: 34 89% 85%;
-    --error: 10 100% 86%;
-  }
-
-  [data-theme='dark'] {
-    --background: 0 0% 0%;
-    --foreground: 210 40% 98%;
-
-    --card: 0 0% 4%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 0, 0%, 15%, 0.8;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-
-    --success: 196 100% 14%;
-    --warning: 34 51% 25%;
-    --error: 10 39% 43%;
+    /* Semantic Tokens */
+    --background: 45 33% 96%;
+    --foreground: 0 0% 10%;
+    
+    --primary: 0 0% 10%;
+    --primary-foreground: 45 33% 96%;
+    
+    --secondary: 258 90% 66%;
+    --secondary-foreground: 45 33% 96%;
+    
+    --accent: 201 68% 52%;
+    --accent-foreground: 45 33% 96%;
+    
+    --muted: 60 5% 81%;
+    --muted-foreground: 0 0% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    
+    --border: 60 5% 81%;
+    --input: 60 5% 81%;
+    --ring: 258 90% 66%;
+    
+    --radius: 0.75rem;
+    
+    /* Custom Design Tokens */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-elegant: 0 20px 60px -15px hsl(var(--noir-urbain) / 0.15);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--noir-urbain) / 0.8), hsl(var(--violet-studio) / 0.6));
   }
 }
 
@@ -89,15 +51,94 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col antialiased;
   }
 }
 
-html {
-  opacity: 0;
+@layer components {
+  /* Heading Styles */
+  .heading-display {
+    @apply text-6xl md:text-8xl font-bold tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .heading-hero {
+    @apply text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .heading-section {
+    @apply text-3xl md:text-5xl font-semibold tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .heading-card {
+    @apply text-2xl md:text-3xl font-semibold;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Body Text */
+  .body-large {
+    @apply text-lg md:text-xl leading-relaxed;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .body-regular {
+    @apply text-base leading-relaxed;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
+  }
+
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-to-b from-noir-urbain/70 to-noir-urbain/40;
+  }
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
+@layer utilities {
+  /* Parallax Container */
+  .parallax-container {
+    @apply relative overflow-hidden;
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-20 md:py-32 px-6 md:px-12 lg:px-20;
+  }
+
+  /* Max Width Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
