@@ -8,10 +8,8 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-type Args = {
-  params: {
-    slug?: string
-  }
+type PageProps = {
+  params: { slug: string }
 }
 
 const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -31,21 +29,13 @@ const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-async function ProjectDetailPage({ params }: Args) {
-  const { slug } = params
-  if (!slug) {
-    return notFound()
-  }
+export default async function ProjectDetailPage({ params }: PageProps) {
+  const project = await queryProjectBySlug({ slug: params.slug })
 
-  const project = (await queryProjectBySlug({ slug })) as Project | null
-  if (!project) {
-    return notFound()
-  }
+  if (!project) return notFound()
 
-  return <ProjectDetailClient project={project} />
+  return <ProjectDetailClient project={project as Project} />
 }
-
-export default ProjectDetailPage
 
 // MEILLEURE PRATIQUE : Générer les métadonnées (titre, description) pour le SEO
 export async function generateMetadata({
