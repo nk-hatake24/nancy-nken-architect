@@ -17,6 +17,8 @@ import { Montserrat_Alternates } from 'next/font/google'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import { LayoutInitializer } from '@/components/LayoutIntializer'
+import { GoogleAnalytics } from '@/components/Analytics/GoogleAnalytics'
+import { GoogleTagManager } from '@/components/Analytics/GoogleTagManager'
 
 const montserrat = Montserrat_Alternates({
   subsets: ['latin'],
@@ -34,9 +36,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <GoogleAnalytics />
       </head>
       <body>
         <Providers>
+          <GoogleTagManager />
           <LayoutInitializer>
             <AdminBar
               adminBarProps={{
@@ -57,8 +61,4 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
   openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
-  },
 }
