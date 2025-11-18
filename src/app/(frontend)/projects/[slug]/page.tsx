@@ -5,6 +5,7 @@ import type { Project } from '@/payload-types'
 import { ProjectDetailClient } from './page.client'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { draftMode } from 'next/headers'
 
 // Static params for SSG or ISR
 export async function generateStaticParams() {
@@ -18,10 +19,17 @@ export async function generateStaticParams() {
   return projects.docs.map(({ slug }) => ({ slug }))
 }
 
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
 // Normal Next.js param type
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const decodedSlug = decodeURIComponent(params.slug)
-  const project = await queryProjectBySlug({ slug: decodedSlug })
+export default async function ProjectDetailPage({ params: paramsPromise }: Args) {
+  const { isEnabled: draft } = await draftMode()
+  const { slug = '' } = await paramsPromise
+  const project = await queryProjectBySlug({ slug })
 
   if (!project) return notFound()
 
