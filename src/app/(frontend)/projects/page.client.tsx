@@ -31,7 +31,7 @@ export const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
       </section>
 
       {/* Projects Grid */}
-      <section className="pb-20">
+      <section className="">
         {projects.map((project, index) => {
           const mainImage = project.mainImage as any // Adapter le typage si nécessaire
 
