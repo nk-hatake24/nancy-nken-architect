@@ -8,10 +8,6 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-type PageProps = {
-  params: { slug: string }
-}
-
 const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
   const payload = await getPayload({ config: configPromise })
 
@@ -29,7 +25,7 @@ const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-export default async function ProjectDetailPage({ params }: PageProps) {
+export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
   const project = await queryProjectBySlug({ slug: params.slug })
 
   if (!project) return notFound()
