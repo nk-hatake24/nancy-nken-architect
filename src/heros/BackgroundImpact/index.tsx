@@ -21,7 +21,7 @@ export const ArchitectHero: React.FC<Page['hero']> = (props) => {
     typeof backgroundImage === 'object' && backgroundImage !== null ? backgroundImage : null
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className=" font-body-alt relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <motion.div
         initial={{ scale: 1.1 }}
