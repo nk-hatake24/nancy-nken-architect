@@ -28,15 +28,15 @@ const dirname = path.dirname(filename)
 const FRONTEND_URL = process.env.PAYLOAD_PUBLIC_FRONTEND_URL
 
 const emailAdapter = nodemailerAdapter({
-  defaultFromAddress: process.env.DEFAULT_ADDRESS || 'nkenlamichel@gmail.com',
+  defaultFromAddress: process.env.DEFAULT_ADDRESS || '',
   defaultFromName: 'nancynken',
   // Nodemailer transportOptions
   transportOptions: {
-    host: 'smtp.gmail.com',
-    port: 587,
+    host: process.env.SMTP_HOST || '',
+    port: process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587,
     auth: {
-      user: 'nkenlamichel@gmail.com',
-      pass: 'lkhr slqs ensr pixo',
+      user: process.env.SMTP_USER || '',
+      pass: process.env.SMTP_PASS || '',
     },
   },
 })

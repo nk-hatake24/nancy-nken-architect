@@ -23,8 +23,8 @@ export const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
           >
             <h1 className="heading-hero text-primary mb-6">Mes Projets</h1>
             <p className="body-large text-muted-foreground max-w-3xl mx-auto">
-              Une collection de réalisations architecturales qui célèbrent l'identité africaine et
-              l'innovation moderne
+              Une collection de réalisations architecturales qui célèbrent l&apos;identité africaine
+              et l&apos;innovation moderne
             </p>
           </motion.div>
         </div>

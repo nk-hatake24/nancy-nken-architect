@@ -3,7 +3,7 @@
 import React from 'react'
 import { ProjectsPageClient } from './page.client'
 import type { Project } from '@/payload-types'
-import { notFound } from 'next/navigation'
+//import { notFound } from 'next/navigation'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 

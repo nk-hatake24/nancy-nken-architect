@@ -13,6 +13,7 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { AdvancedProjectsGrid } from '@/blocks/ProjectGrid/config'
+import { Values } from '@/blocks/Values/config'
 
 import {
   MetaDescriptionField,
@@ -21,8 +22,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { ValuesBlock } from '@/blocks/Values'
-import { Values } from '@/blocks/Values/config'
+//import { ValuesBlock } from '@/blocks/Values'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',

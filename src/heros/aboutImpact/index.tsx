@@ -10,6 +10,7 @@ import type { Page } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import RichText from '@/components/RichText' // Point important !
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Le composant reçoit l'objet 'hero' complet
 export const AboutHero: React.FC<Page['hero']> = (props) => {
@@ -42,7 +43,7 @@ export const AboutHero: React.FC<Page['hero']> = (props) => {
           >
             {image?.url && (
               <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-                <img
+                <Image
                   src={image.url}
                   alt={image.alt || 'Portrait de Nancy Nkenla'}
                   className="w-full h-full object-cover"
