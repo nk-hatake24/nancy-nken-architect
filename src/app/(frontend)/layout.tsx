@@ -19,6 +19,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { LayoutInitializer } from '@/components/LayoutIntializer'
 import { GoogleAnalytics } from '@/components/Analytics/GoogleAnalytics'
 import { GoogleTagManager } from '@/components/Analytics/GoogleTagManager'
+import { Analytics } from '@vercel/analytics/next'
 
 const montserrat = Montserrat_Alternates({
   subsets: ['latin'],
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+
         <GoogleAnalytics />
       </head>
       <body>
@@ -50,6 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
             <Header />
             {children}
+            <Analytics />
             <Footer />
           </LayoutInitializer>
         </Providers>
