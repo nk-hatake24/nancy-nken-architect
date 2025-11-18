@@ -46,7 +46,10 @@ export const AboutHero: React.FC<Page['hero']> = (props) => {
                 <Image
                   src={image.url}
                   alt={image.alt || 'Portrait de Nancy Nkenla'}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
+                  width={100}
+                  height={300}
+                  priority
                 />
               </div>
             )}

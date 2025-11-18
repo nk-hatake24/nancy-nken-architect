@@ -9,9 +9,9 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
 type Args = {
-  params: Promise<{
+  params: {
     slug?: string
-  }>
+  }
 }
 
 const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -31,8 +31,8 @@ const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-async function ProjectDetailPage({ params: paramsPromise }: Args) {
-  const { slug } = await paramsPromise
+async function ProjectDetailPage({ params }: Args) {
+  const { slug } = params
   if (!slug) {
     return notFound()
   }
