@@ -29,19 +29,18 @@ type Args = {
 export default async function ProjectDetailPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  const project = await queryProjectBySlug({ slug })
+  const decodedSlug = decodeURIComponent(slug)
+  const url = '/projects/' + decodedSlug
+  const project = await queryProjectBySlug({ slug: decodedSlug })
 
   if (!project) return notFound()
 
   return <ProjectDetailClient project={project as Project} />
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
-  const decodedSlug = decodeURIComponent(params.slug)
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { slug = '' } = await paramsPromise
+  const decodedSlug = decodeURIComponent(slug)
   const project = await queryProjectBySlug({ slug: decodedSlug })
 
   if (!project)
@@ -62,10 +61,12 @@ export async function generateMetadata({
 }
 
 const queryProjectBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'projects',
+    draft,
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 1,
