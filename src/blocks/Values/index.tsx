@@ -35,7 +35,7 @@ export const ValuesBlock: React.FC<ValuesBlockProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center"
         >
           <h2 className="heading-section text-primary mb-4">{title}</h2>
           <p className="body-large text-muted-foreground max-w-2xl mx-auto">{description}</p>
